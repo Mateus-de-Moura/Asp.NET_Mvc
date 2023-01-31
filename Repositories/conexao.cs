@@ -16,23 +16,22 @@ namespace WebTeste.entites
         string conect_bancoNovo = @"Data Source=DESKTOP-II0SEOF\SQLEXPRESS;Initial Catalog=DB_WEB;Integrated Security=True";
 
 
-        public bool ConsultarUsuario(string usu, string psw)
+        public (bool,UsuarioModel) ConsultarUsuario(string usu, string psw)
         {
-            var con = new SqlConnection(conect_bancoNovo);
-            bool retorno = false;
+            var con = new SqlConnection(conect_bancoNovo);            
             try
             {
                 con.Open();
                 string query = $"select * from TB_Login where usuario = '{usu}' and senha ='{psw}'";
 
-                var usuario = con.Query(query);
-                if (usuario.Count() > 0)
+                var usuario = con.Query<UsuarioModel>(query).First();
+                if (usuario != null)
                 {
-                    retorno = true;
+                    return (true, usuario);
                 }
                 else
                 {
-                    retorno = false;
+                    return (false,new UsuarioModel());
                 }
             }
             catch (Exception)
@@ -43,7 +42,7 @@ namespace WebTeste.entites
             {
                 con.Close();
             }
-            return retorno;
+          
         }
         public IEnumerable<Contas> GetContas(int Ofsset)
         {

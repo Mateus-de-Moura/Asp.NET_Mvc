@@ -5,10 +5,10 @@
 <button id="btnNovo" type="button" class="d-flex btn btn-success btn-sm justify-content-start" data-toggle="modal" data-target="#modalExemplo">
     NOVA +
 </button>
-<div class="row justify-content-end">    
-    <div id="inputBusca" class="input-group">       
-        <input id="Inpt" class="form-control  align-content-end" placeholder="Buscar..">       
-    </div>   
+<div class="row justify-content-end">
+    <div id="inputBusca" class="input-group">
+        <input id="Inpt" class="form-control  align-content-end" placeholder="Buscar..">
+    </div>
 </div>
 
 
@@ -42,55 +42,57 @@
 <nav aria-label="Navegação de página exemplo" id="pageIten">
     <ul class="pagination justify-content-center ">
         <li class="page-item ">
-            <a class="page-link" href="" tabindex="-1" ><<</a>
+            <a class="page-link" href="" tabindex="-1"><<</a>
         </li>
         <li class="page-item">
-            <a class="page-link" id="tab3" >>></a>
+            <a class="page-link" id="tab3">>></a>
         </li>
     </ul>
 </nav>
 
 
 <!-- Modal -->
-<div   class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document" id="ModalCad">
-        <div class="modal-content">            
+<div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" >
+        <div class="modal-content">
+            <h5 class="modal-title">Cadastrar Nova conta</h5>
             <div class="modal-body" id="ModalCad">
                 <div class="panel panel-primary">
-                            <div class="panel-body">                               
+                    <div class="panel-body">
 
-                                <!-- Text input-->
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col">
-                                            <input type="text" id="desc"  class="form-control" placeholder="Descrição" aria-label="First name">
-                                        </div>
-                                        <div class="col">
-                                    <input type="text" id="valor"  class="form-control" placeholder="Valor" aria-label="Last name">
-                                        </div>
-                                    </div>
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col">
+                                    <input type="text" id="desc" class="form-control" placeholder="Descrição" aria-label="First name">
                                 </div>
-                                <!-- Text input-->
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-lg-4">
-                                    <input id="data"  class="form-control input-md" type="date" maxlength="8" pattern="[0-9]+$">
-                                        </div>
-                                        <div class="col-md-3 ">
-                                         <select id="situa" class="form-select ">
-                                                <option selected>Selecione</option>
-                                                <option value="Pago">Pago</option>
-                                                <option value="A vencer">A vencer</option>
-                                            </select>
-                                        </div>                                    
-                                    </div>
+                                <div class="col">
+                                    <input type="text" id="valor" class="form-control" placeholder="Valor" aria-label="Last name">
                                 </div>
                             </div>
-                        </div>           
+                        </div>
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <input id="data" class="form-control input-md" type="date" maxlength="8" pattern="[0-9]+$">
+                                </div>
+                                <div class="col-md-3 ">
+                                    <select id="situa" class="form-select ">
+                                        <option selected>Selecione</option>
+                                        <option value="Pago">Pago</option>
+                                        <option value="A vencer">A vencer</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
             </div>
             <div class="modal-footer" id="ModalCadFooter">
-                <button type="Submit" class="btn btn-success" id="Salvar" >Cadastrar</button>
-                <button type="button" class="btn btn-danger">Cancelar</button>
+                <button type="Submit" class="btn btn-success" id="Salvar">Cadastrar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>
@@ -110,17 +112,17 @@
         $.extend($.fn.dataTable.defaults, {
             searching: false,
             ordering: false,
-        );
+                );
 
         $('#modalExemplo').on('shown.bs.modal', function () {
             $('#meuInput').trigger('focus')
         });
 
-      
+
     </script>
 
     <script>
-        $(function(){
+        $(function () {
             $('#Salvar').click(function () {
                 var nome = $("#desc").val();
                 var obj = { Descricao: $("#desc").val(), Valor: $("#valor").val(), Vencimento: $("#data").val(), Situacao: $("#situa option:selected").val(), }
@@ -132,18 +134,20 @@
                         contentType: "application/json; charset=utf-8",
                         url: "Home/Add",
                         data: JSON.stringify({
-                            id: $("#valor").val(),
-                               descricao: $("#desc").val() 
+                            Descricao: $("#desc").val(),
+                            Valor: $("#valor").val(),
+                            Vencimento: $("#data").val(),
+                            Situacao: $("#situa option:selected").val()
                         }),
                         success: function (msg) {
                             alert("funcionou");
                         },
                         error: function () {
-                            alert("erroo");
+                            alert("Verifique se todos os campos foram preenchidos !!");
                         }
                     });
             });
-        });      
+        });
 
     </script>
 }

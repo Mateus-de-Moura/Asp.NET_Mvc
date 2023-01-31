@@ -88,6 +88,39 @@
    justify-content:flex-start;
    position:absolute;
 }
+#ModalCad {
+    background-color: #3e4147;
+}
+#modalExemplo h5 {
+    background-color: #3e4147;
+    color:white;
+    padding:20px;
+}
+#modalExemplo{
+    box-shadow: 5px 5px 5px;
+}
+
+#ModalCad input {
+    border: 0;
+    background-color: #3e4147;
+    border-bottom: 2px solid #007bff;
+    color: white;
+}
+#ModalCad input::placeholder {
+   
+    color: white;
+}
+#ModalCad select {
+    border: 0;
+    background-color: #3e4147;
+    border-bottom: 2px solid #007bff;
+    color: white;
+}
+
+#ModalCadFooter {
+    border: 0;
+    background-color: #3e4147;
+}
 
 
 

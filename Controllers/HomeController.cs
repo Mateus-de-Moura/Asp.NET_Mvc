@@ -1,5 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Nancy.Json;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,18 +18,18 @@ namespace WebTeste.Controllers
 {
     public class HomeController : Controller
     {
-
+       
         private readonly conexao _conn;
 
 
         private readonly ILogger<HomeController> _logger;
-
+       
         public HomeController(ILogger<HomeController> logger)
         {
             _conn = new conexao();
             _logger = logger;
         }
-    
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
         public IActionResult Index()
         {
             //var pagina = 1;
@@ -38,6 +43,7 @@ namespace WebTeste.Controllers
             return View(contas);
         }
 
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
         public IActionResult Privacy()
         {
             return View();
@@ -56,25 +62,36 @@ namespace WebTeste.Controllers
         //}
 
         [HttpPost]
-        public IActionResult Adicionar(Contas conta) 
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        public IActionResult Adicionar(Contas conta)
         {
             _conn.Cadastrar(conta);
             return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public JsonResult Add([FromBody]object obj) 
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        public JsonResult Add([FromBody] object conta)
         {
-            //_conn.Cadastrar(conta);
-            return Json(true);
+            if (conta != null)
+            {
+                var Conta = JsonConvert.DeserializeObject<Contas>(conta.ToString());
+
+                _conn.Cadastrar(Conta);
+                return Json(true);
+            }
+            return Json(false);
+
         }
         [HttpPut]
-        public IActionResult AtualizarConta() 
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        public IActionResult AtualizarConta()
         {
             return Ok();
-            
+
         }
         [HttpDelete]
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
         public IActionResult DeletarConta()
         {
             return Ok();

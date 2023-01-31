@@ -10,11 +10,8 @@ using WebTeste.Models;
 namespace WebTeste.entites
 {
     public class conexao 
-    {
-        
-        //string conectContas = @"Data Source=DESKTOP-II0SEOF\SQLEXPRESS;Initial Catalog=DB_CONTAS;Integrated Security=True";
+    {     
         string conect_bancoNovo = @"Data Source=DESKTOP-II0SEOF\SQLEXPRESS;Initial Catalog=DB_WEB;Integrated Security=True";
-
 
         public (bool,UsuarioModel) ConsultarUsuario(string usu, string psw)
         {

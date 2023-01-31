@@ -1,0 +1,68 @@
+﻿@model Contas
+@{
+    ViewData["Title"] = "Cadastro de Contas";
+}
+<h1>@ViewData["Title"]</h1>
+<script>
+    var teste = document.getElementById("#teste")
+    inpt.text = teste;
+</script>
+
+<form class="form-horizontal" asp-controller="Home" asp-action="Adicionar" method="post">
+    <fieldset>
+        <div class="panel panel-primary">
+            <div class="panel-body">             
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" asp-for="Descricao" class="form-control" placeholder="Descrição" aria-label="First name">
+                        </div>
+                        <div class="col">
+                            <input type="text" asp-for="Valor" class="form-control" placeholder="Valor" aria-label="Last name">
+                        </div>
+                    </div>
+                </div>
+                <!-- Text input-->
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <input asp-for="Vencimento" class="form-control input-md" type="date" maxlength="8" pattern="[0-9]+$">
+                        </div>
+                        <div class="col-md-3 ">
+                        <select asp-for="Situacao" class="form-select ">
+                            <option selected>Selecione</option>
+                            <option value="Pago">Pago</option>
+                            <option value="A vencer">A vencer</option>
+                        </select> 
+                        </div>
+                        @*<div class="col-md-5 ">
+                            @Html.DropDownList("situacao", new List<SelectListItem>
+                            {
+                            new SelectListItem{ Text= "--Selecione--",  Value= "0"},
+                            new SelectListItem{ Text= "Pago",  Value= "Pago"},
+                            new SelectListItem{ Text= "A vencer",  Value= "A vencer"}
+                            })
+                        </div>*@
+                        
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Button (Double) -->
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="Cadastrar"></label>
+                <div class="col-md-8">
+                    <button type="Submit" class="btn btn-success">Cadastrar</button>
+                    <button type="" class="btn btn-danger" asp-controller="Home" asp-action="Index">Cancelar</button>
+                </div>
+            </div>
+
+        </div>
+
+    </fieldset>
+</form>
+
+

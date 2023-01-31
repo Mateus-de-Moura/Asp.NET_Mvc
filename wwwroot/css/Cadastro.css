@@ -1,0 +1,78 @@
+﻿body {
+    background-color: #333333;
+}
+
+.card {
+    display: flex;
+    margin-top: 6%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+    padding: 3%;
+    background-color: #3e4147;
+    box-shadow: 1px 1px 5px black;
+}
+
+    .card h3 {
+        color: white;
+        margin-bottom: 2rem;
+    }
+
+    .card label {
+        margin-bottom: -10px;
+        color: white;
+    }
+
+    .card input {
+        border: 0;
+        background-color: #3e4147;
+        border-bottom: 2px solid #007bff;
+        color: white;
+    }
+
+        .card input:focus {
+            color: white;
+            background-color: #3e4147;
+            border-bottom: 2px solid #007bff;
+            box-shadow: 0 0 0 0;
+        }
+
+        .card input:checked {
+            color: #007bff;
+            background-color: #0069d9;
+        }
+
+#btns {
+    background-color: #007bff;
+    color: #ffffff;
+    margin-top: 5px;
+    border-radius: 10px;
+    width: 50%;
+}
+
+#btn-login:hover {
+    background-color: #0069d9;
+}
+
+#btn-Voltar {
+    color: #ffffff;
+    margin-top: 5px;
+    border-radius: 10px;
+    width: 50%;
+}
+
+#btnCriar {
+    border: none;
+    background-color: #3e4147;
+    color: rgb(0, 128, 255);
+}
+
+.criarConta button {
+    margin-left: 1rem;
+}
+
+.divButtons {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}

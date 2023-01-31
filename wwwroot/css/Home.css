@@ -1,0 +1,93 @@
+﻿body {
+ 
+    /*background-image: url('../Imagens/noite-na-paisagem-do-mar-com-o-luar-paisagem-noturna-de-fantasia_104785-1055.webp');*/
+}
+
+.row {
+    font-family: 'Comic Sans MS';
+   
+}
+#descricoes         
+{
+   
+}
+.site-footer, .page-wrap:after {
+    height: 50px;
+    width: 100%;
+    background-color: #3e4147;
+}
+
+.site-footer {
+    background-color: #3e4147;
+    position: absolute;
+    bottom: 0;
+}
+#footer-text {
+    color: azure;
+    display: flex;
+    bottom: 0;
+    position: absolute;
+    width: 100%
+}
+.divfooter {
+    width: 100px;
+    height: 100px;
+}
+#inputBusca {
+    display: flex;
+    flex-direction: row;    
+    align-items: flex-end;
+    width: 300px;
+    padding-bottom: 10px;
+    
+   
+}
+#Inpt {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    width: 200px;
+    padding-bottom: 10px;
+    border: 0;
+    background-color: #3e4147;
+    border-bottom: 2px solid #007bff;
+    color: white;
+    
+}
+
+#teste {
+    background-color: #3e4147;
+    border-block-color: #3e4147;
+    border:none;
+    border-top-left-radius: 25px;
+    box-shadow: 5px 5px 5px 5px;
+    }
+#Itens td {   
+    border-block-color: #3e4147;
+    border: none;
+    color:white;
+
+}
+.page-item  a{
+    border-block-color: #3e4147;
+    gap: 1px;
+}
+#pageIten{
+    color:red;
+}
+
+
+#navbarHome {
+    background-color: #3e4147;
+}
+#navbarHome a{
+   color: wheat;
+}
+ #btnNovo {
+   justify-content:flex-start;
+   position:absolute;
+}
+
+
+

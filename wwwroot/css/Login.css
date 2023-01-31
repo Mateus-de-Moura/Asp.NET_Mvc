@@ -1,0 +1,76 @@
+﻿body {
+    background-color: #333333;
+}
+
+.card {
+    display: flex;
+    margin-top: 10%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+    padding: 3%;
+    background-color: #3e4147;
+    box-shadow: 1px 1px 5px black;
+}
+
+    .card h3 {
+        color: white;
+        margin-bottom: 2rem;
+    }
+
+    .card label {
+        margin-bottom: -10px;
+        color: white;
+    }
+
+    .card input {
+        border: 0;
+        background-color: #3e4147;
+        border-bottom: 2px solid #007bff;
+        color: white;
+    }
+
+        .card input:focus {
+            color: white;
+            background-color: #3e4147;
+            border-bottom: 2px solid #007bff;
+            box-shadow: 0 0 0 0;
+        }
+
+#relembrar:checked {
+    color: #007bff;
+    background-color: #0069d9;
+}
+#relembrar {
+    background-color: white;
+}
+
+#btn-login {
+    background-color: #007bff;
+    color: #ffffff;
+    margin-top: 25px;
+    border-radius: 20px;
+    width: 100%;
+}
+
+    #btn-login:hover {
+        background-color: #0069d9;
+    }
+
+#btnCriar {
+    border: none;
+    background-color: #3e4147;
+    color: rgb(0, 128, 255);
+}
+
+.criarConta {
+    margin-top: 15px;
+    margin-left: 4rem;
+    display: flex;
+    align-items: center;
+    align-content: center;
+}
+
+    .criarConta button {
+        margin-left: 1rem;
+    }

@@ -1,0 +1,58 @@
+﻿@model UsuarioModel
+@{
+
+    Layout = "_LayoutDeslogado";
+}
+<link rel="stylesheet" href="~/css/Cadastro.css">
+<div class="container">
+    <div class="card">
+        <h3>Criar conta</h3>
+        <form asp-controller="Login" asp-action="CadastrarUsuario" method="post">
+            <div class="form-group">
+                <label for="email">Nome</label>
+                <input item="teste" type="text" class="form-control" id="email">
+
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input item="teste" asp-for="usuario" type="email" class="form-control" id="email">
+
+            </div>
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <input type="password" asp-for="senha" class="form-control" id="senha">
+            </div>
+
+            <div class="form-group">
+                <label for="senha">Confirmar Senha</label>
+                <input type="password"  class="form-control" id="senha">
+            </div>
+
+            <div class="divButtons">
+                <button type="submit" class="btn" id="btns">Salvar</button>
+                <button type="submit" class="btn btn-secondary" id="btn-Voltar" asp-controller="Login" asp-action="Index">Voltar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@*<div class="box">
+    <h2>Cadastro de Usuário</h2>
+    <img src="/ImagenS/icones_login.png" class="avatar" />
+    <form asp-controller="Login" asp-action="CadastrarUsuario" method="post">
+    <div class="form-group">
+
+            <input type="text" asp-for="usuario" class="form-control" id="usuario" placeholder="Usuário">
+
+    </div>
+    <div class="form-group">
+
+        <input type="password" asp-for="senha" class="form-control" id="senha" placeholder="Senha">
+    </div>
+
+    <button type="submit" class="btn btn-success">Enviar</button>
+    <button type="submit" class="btn btn-secondary" asp-controller="Login" asp-action="Index">Voltar</button>
+</form>
+</div>*@

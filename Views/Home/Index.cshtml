@@ -1,0 +1,152 @@
+﻿@model IEnumerable<WebTeste.Models.Contas>
+<link rel="stylesheet" href="~/css/Home.css">
+
+
+<button id="btnNovo" type="button" class="d-flex btn btn-success btn-sm justify-content-start" data-toggle="modal" data-target="#modalExemplo">
+    NOVA +
+</button>
+<div class="row justify-content-end">    
+    <div id="inputBusca" class="input-group">       
+        <input id="Inpt" class="form-control  align-content-end" placeholder="Buscar..">       
+    </div>   
+</div>
+
+
+<table id="teste" class="table table-bordered table-condensed">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Descrição</th>
+            <th scope="col">Valor</th>
+            <th scope="col">Vencimento</th>
+            <th scope="col">Situação</th>
+            <th scope="col">Ação</th>
+        </tr>
+    </thead>
+    <tbody id="Itens">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Descricao</td>
+                <td>@item.Valor</td>
+                <td>@item.Vencimento.ToString("dd/mm/yyyy")</td>
+                <td>@item.Situacao</td>
+                <td class="col col-sm-2">
+                    <button type="Submit" class="btn btn-secondary btn-sm">Editar</button>
+                    <button type="Submit" class="btn btn-danger btn-sm">Excluir</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav aria-label="Navegação de página exemplo" id="pageIten">
+    <ul class="pagination justify-content-center ">
+        <li class="page-item ">
+            <a class="page-link" href="" tabindex="-1" ><<</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" id="tab3" >>></a>
+        </li>
+    </ul>
+</nav>
+
+
+<!-- Modal -->
+<div   class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" id="ModalCad">
+        <div class="modal-content">            
+            <div class="modal-body" id="ModalCad">
+                <div class="panel panel-primary">
+                            <div class="panel-body">                               
+
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col">
+                                            <input type="text" id="desc"  class="form-control" placeholder="Descrição" aria-label="First name">
+                                        </div>
+                                        <div class="col">
+                                    <input type="text" id="valor"  class="form-control" placeholder="Valor" aria-label="Last name">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                    <input id="data"  class="form-control input-md" type="date" maxlength="8" pattern="[0-9]+$">
+                                        </div>
+                                        <div class="col-md-3 ">
+                                         <select id="situa" class="form-select ">
+                                                <option selected>Selecione</option>
+                                                <option value="Pago">Pago</option>
+                                                <option value="A vencer">A vencer</option>
+                                            </select>
+                                        </div>                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>           
+            </div>
+            <div class="modal-footer" id="ModalCadFooter">
+                <button type="Submit" class="btn btn-success" id="Salvar" >Cadastrar</button>
+                <button type="button" class="btn btn-danger">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="@Url.Content("~/Scripts/jquery-1.10.2.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#teste').DataTable();
+
+        });
+
+        $.extend($.fn.dataTable.defaults, {
+            searching: false,
+            ordering: false,
+        );
+
+        $('#modalExemplo').on('shown.bs.modal', function () {
+            $('#meuInput').trigger('focus')
+        });
+
+      
+    </script>
+
+    <script>
+        $(function(){
+            $('#Salvar').click(function () {
+                var nome = $("#desc").val();
+                var obj = { id: $("#valor").val(), descricao: $("#desc").val() }
+
+                $.ajax(
+                    {
+                        type: "POST",
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        url: "Home/Add",
+                        data: JSON.stringify({
+                            id: $("#valor").val(),
+                               descricao: $("#desc").val() 
+                        }),
+                        success: function (msg) {
+                            alert("funcionou");
+                        },
+                        error: function () {
+                            alert("funcionou");
+                        }
+                    });
+            });
+        });      
+
+    </script>
+}
+
+
+

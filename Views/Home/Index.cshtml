@@ -123,7 +123,7 @@
         $(function(){
             $('#Salvar').click(function () {
                 var nome = $("#desc").val();
-                var obj = { id: $("#valor").val(), descricao: $("#desc").val() }
+                var obj = { Descricao: $("#desc").val(), Valor: $("#valor").val(), Vencimento: $("#data").val(), Situacao: $("#situa option:selected").val(), }
 
                 $.ajax(
                     {

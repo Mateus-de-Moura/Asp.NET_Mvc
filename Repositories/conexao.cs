@@ -36,7 +36,7 @@ namespace WebTeste.entites
             }
             catch (Exception)
             {
-                throw;
+                return (false, new UsuarioModel());
             }
             finally
             {

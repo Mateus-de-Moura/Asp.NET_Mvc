@@ -45,17 +45,11 @@ namespace WebTeste.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-        //[HttpGet("{descricao}")]
-        ////[HttpGet("{Id}")]
-        //public IActionResult GetPorDescricao() 
-        //{
-        //    var contas = _conn.GetContas();
-        //    return Ok(contas);   
-        //}
+        }     
 
         [HttpPost]
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        [AllowAnonymous]
+        //[Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
         public IActionResult Adicionar(Contas conta)
         {
             _conn.Cadastrar(conta);
@@ -83,13 +77,12 @@ namespace WebTeste.Controllers
             return Ok();
 
         }
+
         [HttpDelete]
         [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
         public IActionResult DeletarConta()
         {
             return Ok();
-
         }
-
     }
 }

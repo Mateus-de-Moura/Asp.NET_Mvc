@@ -30,7 +30,7 @@ namespace WebTeste
                     .AddCookie(options =>
                     {
                         options.LoginPath = "/login";
-                        options.LogoutPath = "/login";
+                        options.LogoutPath = "/";
                         options.SlidingExpiration = true;
                         options.AccessDeniedPath = "/Forbidden/";
                         options.Cookie.Name = "auth_cookie";

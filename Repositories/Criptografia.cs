@@ -32,9 +32,9 @@ namespace WebTeste.Repositories
                 }
                 return text;
             }
-            catch (Exception ex)
+            catch (Exception )
             {
-                throw new Exception(ex.Message, ex.InnerException);
+                return "";
             }
         }
         public string Decript(string texto)

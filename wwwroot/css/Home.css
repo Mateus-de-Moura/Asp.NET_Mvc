@@ -1,16 +1,14 @@
 ﻿body {
- 
     /*background-image: url('../Imagens/noite-na-paisagem-do-mar-com-o-luar-paisagem-noturna-de-fantasia_104785-1055.webp');*/
 }
 
 .row {
     font-family: 'Comic Sans MS';
-   
 }
-#descricoes         
-{
-   
+
+#descricoes {
 }
+
 .site-footer, .page-wrap:after {
     height: 50px;
     width: 100%;
@@ -22,6 +20,7 @@
     position: absolute;
     bottom: 0;
 }
+
 #footer-text {
     color: azure;
     display: flex;
@@ -29,19 +28,20 @@
     position: absolute;
     width: 100%
 }
+
 .divfooter {
     width: 100px;
     height: 100px;
 }
+
 #inputBusca {
     display: flex;
-    flex-direction: row;    
+    flex-direction: row;
     align-items: flex-end;
     width: 300px;
     padding-bottom: 10px;
-    
-   
 }
+
 #Inpt {
     display: flex;
     flex-direction: row;
@@ -53,51 +53,60 @@
     background-color: #3e4147;
     border-bottom: 2px solid #007bff;
     color: white;
-    
 }
 
 #teste {
     background-color: #3e4147;
     border-block-color: #3e4147;
-    border:none;
+    border: none;
     border-top-left-radius: 25px;
     box-shadow: 5px 5px 5px 5px;
-    }
-#Itens td {   
+}
+
+#Itens td {
     border-block-color: #3e4147;
     border: none;
-    color:white;
-
+    color: white;
 }
-.page-item  a{
+
+.page-item a {
     border-block-color: #3e4147;
     gap: 1px;
 }
-#pageIten{
-    color:red;
+
+#pageIten {
+    color: red;
 }
 
 
 #navbarHome {
     background-color: #3e4147;
-    box-shadow:5px 5px 5px;
+    box-shadow: 5px 5px 5px;
+ 
 }
-#navbarHome a{
-   color: wheat;
+
+    #navbarHome a {
+        color: wheat;
+    }
+
+#btnNovo {
+    justify-content: flex-start;
+    position: absolute;
+    
+    
 }
- #btnNovo {
-   justify-content:flex-start;
-   position:absolute;
-}
+
 #ModalCad {
     background-color: #3e4147;
 }
+
 #modalExemplo h5 {
     background-color: #3e4147;
-    color:white;
-    padding:20px;
+    color: white;
+    padding: 20px;
 }
-#modalExemplo{
+
+#modalExemplo {
     box-shadow: 5px 5px 5px;
 }
 
@@ -107,10 +116,11 @@
     border-bottom: 2px solid #007bff;
     color: white;
 }
-#ModalCad input::placeholder {
-   
-    color: white;
-}
+
+    #ModalCad input::placeholder {
+        color: white;
+    }
+
 #ModalCad select {
     border: 0;
     background-color: #3e4147;
@@ -121,20 +131,61 @@
 #ModalCadFooter {
     border: 0;
     background-color: #3e4147;
+   
 }
-#teste_paginate a {
-    border: 1px solid;
-    gap: 1rem;
+
+#teste_previous {
+    border: 1px solid #3e4147;
+    background-color: #007bff;
+    border-radius: 8px;
+    padding: 5px;
     color: white;
-    padding-left: 1rem;
-    margin: 1px;
-    border:none;
-    cursor:pointer;
-    align-items:center;
+    
+    text-decoration: none;
+    cursor: pointer;
+    margin-right: 3px;
+   
 }
-#teste_length {
+
+#teste_next {
+    background-color: #007bff;
+    border-radius: 8px;
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    color: white; 
+    text-decoration: none;
+    cursor: pointer;
+    margin-left: .5rem;
+    
+}
+
+#teste_paginate {
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:center;
+}  
+
+        #teste_paginate span a {
+            background-color: #3e4147;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            background-color: #3e4147;
+            border-radius: 5px;
+            padding: 5px;
+            padding-left: 15px;
+            padding-right: 15px;
+            color: white;           
+            text-decoration: none;
+            cursor: pointer;
+            margin-left: 2px;
+            box-shadow: 1px 1px 1px black;
+        }
+
+
+#teste_length, #teste_info {
     display: none;
 }
-
-
-

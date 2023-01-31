@@ -43,7 +43,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document" >
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <h5 class="modal-title">Cadastrar Nova conta</h5>
             <div class="modal-body" id="ModalCad">
@@ -76,13 +76,13 @@
                                 </div>
                             </div>
                         </div>
-                       
+
                     </div>
                 </div>
             </div>
             <div class="modal-footer" id="ModalCadFooter">
                 <button type="Submit" class="btn btn-success" id="Salvar">Cadastrar</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="close" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>
@@ -92,7 +92,7 @@
 <script src="@Url.Content("~/Scripts/jquery-1.10.2.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>
 <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
 
 @section Scripts{
     <script>
@@ -122,7 +122,7 @@
 
     <script>
         $(function () {
-            $('#Salvar').click(function () {               
+            $('#Salvar').click(function () {
                 $.ajax(
                     {
                         type: "POST",
@@ -135,20 +135,26 @@
                             Vencimento: $("#data").val(),
                             Situacao: $("#situa option:selected").val()
                         }),
-                        success: function (msg) {
-                            
+
+                        success: function (msg) {                                                      
+                            $("#modalExemplo").modal('hide'),
+                                $("#close").trigger('click'),                                
+                                Update()
                         },
                         error: function () {
-                           
+
                         }
                     });
             });
         });
 
+        function Update(){
+            location.reload(true);
+        };
 
 
         $(function () {
-            $('#btnProximo').click(function () {               
+            $('#btnProximo').click(function () {
                 $.ajax(
                     {
                         type: "POST",

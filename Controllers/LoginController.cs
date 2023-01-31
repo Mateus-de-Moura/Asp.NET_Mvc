@@ -76,9 +76,10 @@ namespace WebTeste.Controllers
             }
         }
 
-        public void Logout()
+        public IActionResult Logout()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index");
         }
 
         [HttpPost]

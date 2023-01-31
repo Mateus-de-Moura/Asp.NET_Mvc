@@ -21,12 +21,3 @@ Input.addEventListener('keyup', () => {
     console.log(expressao, linhas);
 });
 
-//let tds = document.querySelectorAll('tr');
-
-//tds.forEach((tr) => {
-//    if (tr.innerText.includes(situacao)) {
-//       /* tr.className = "table-primary";*/
-//        tr.style.textDecorationColor = "blue";
-//    }
-  
-//});

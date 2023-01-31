@@ -31,15 +31,8 @@ namespace WebTeste.Controllers
         }
         [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
         public IActionResult Index()
-        {
-            //var pagina = 1;
-            int paginaCorrente = 1;
-
-            //if (pagina != 1)
-            //{
-            //    paginaCorrente = pagina;
-            //}
-            var contas = _conn.GetContas(paginaCorrente);
+        {       
+            var contas = _conn.GetContas();
             return View(contas);
         }
 
@@ -81,8 +74,8 @@ namespace WebTeste.Controllers
                 return Json(true);
             }
             return Json(false);
-
         }
+
         [HttpPut]
         [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
         public IActionResult AtualizarConta()

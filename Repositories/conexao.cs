@@ -44,20 +44,11 @@ namespace WebTeste.entites
             }
           
         }
-        public IEnumerable<Contas> GetContas(int Ofsset)
-        {
-            //var offset = 1;
-
-            //if (offset != 1)
-            //{
-            //    offset = (10 * (offset - 1)) + 1;
-            //}
-            
+        public IEnumerable<Contas> GetContas()
+        {                  
             var Mes = DateTime.Now.Month;
 
-            string query = $"DECLARE @limit int = 10, @offset int = {Ofsset};with resultado as (select * , ROW_NUMBER() over(order by ID) as linha" +                
-                $" from TB_CONTAS where MONTH(Vencimento) = {Mes} and year(Vencimento) = DATEPART(year, getdate())" +
-                $")select * from resultado where linha >= @offset and linha < @offset + @limit";
+            string query = $"select * from TB_CONTAS where MONTH(Vencimento) = {Mes} and year(Vencimento) = DATEPART(year, getdate())";
 
             var con = new SqlConnection(conect_bancoNovo);
             con.Open();

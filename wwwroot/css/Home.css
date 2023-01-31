@@ -80,6 +80,7 @@
 
 #navbarHome {
     background-color: #3e4147;
+    box-shadow:5px 5px 5px;
 }
 #navbarHome a{
    color: wheat;
@@ -120,6 +121,19 @@
 #ModalCadFooter {
     border: 0;
     background-color: #3e4147;
+}
+#teste_paginate a {
+    border: 1px solid;
+    gap: 1rem;
+    color: white;
+    padding-left: 1rem;
+    margin: 1px;
+    border:none;
+    cursor:pointer;
+    align-items:center;
+}
+#teste_length {
+    display: none;
 }
 
 

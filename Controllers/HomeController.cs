@@ -48,8 +48,8 @@ namespace WebTeste.Controllers
         }     
 
         [HttpPost]
-        [AllowAnonymous]
-        //[Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
         public IActionResult Adicionar(Contas conta)
         {
             _conn.Cadastrar(conta);

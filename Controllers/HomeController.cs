@@ -65,7 +65,7 @@ namespace WebTeste.Controllers
         }
 
         [HttpPost]
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        
         public JsonResult Add([FromBody] object conta)
         {
             if (conta != null)

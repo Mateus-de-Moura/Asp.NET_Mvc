@@ -54,10 +54,10 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                    <input type="text" id="desc" class="form-control" placeholder="Descrição" aria-label="First name">
+                                    <input type="text" id="descri" class="form-control" placeholder="Descrição" >
                                 </div>
                                 <div class="col">
-                                    <input type="text" id="valor" class="form-control" placeholder="Valor" aria-label="Last name">
+                                    <input type="text" id="valor" class="form-control" placeholder="Valor" >
                                 </div>
                             </div>
                         </div>
@@ -130,7 +130,7 @@
                         contentType: "application/json; charset=utf-8",
                         url: "Home/Add",
                         data: JSON.stringify({
-                            Descricao: $("#desc").val(),
+                            Descricao: $("#descri").val(),
                             Valor: $("#valor").val(),
                             Vencimento: $("#data").val(),
                             Situacao: $("#situa option:selected").val()

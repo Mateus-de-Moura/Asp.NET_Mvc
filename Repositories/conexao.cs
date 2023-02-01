@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text.RegularExpressions;
 using WebTeste.Models;
 
 
@@ -58,15 +59,16 @@ namespace WebTeste.entites
             con.Close();
             return contas;
         }
-        public IEnumerable<Contas> GetContasPorDescricao(string descricao)
+        public Contas GetContasPorID(string id)
         {
+            var Id = Regex.Replace(id, @"[$,"",}]", "").Trim();
             var Mes = DateTime.Now.Month;
-            string query = $"select ID,descricao,Valor,Vencimento,Situacao from TB_CONTAS where MONTH(Vencimento) = {Mes} and year(Vencimento) = DATEPART(year, getdate())and descricao like '%{descricao}%'";
+            string query = $"select ID,descricao,Valor,Vencimento,Situacao from TB_CONTAS where MONTH(Vencimento) = {Mes} and year(Vencimento) = DATEPART(year, getdate())and ID = {int.Parse(Id)}";
 
             var con = new SqlConnection(conect_bancoNovo);
             con.Open();
-            var contas = con.Query<Contas>(query);
-            if (contas.Count() > 0)
+            var contas = con.Query<Contas>(query).First();
+            if (contas != null)
             {
                 return contas;
             }
@@ -90,6 +92,26 @@ namespace WebTeste.entites
             con.Open();
             con.Execute(query, UsuarioModel);
             con.Close();
+        }
+
+        public void deleteConta(string id)
+        {
+            var Id = Regex.Replace(id, @"[$,"",}]", "").Trim();
+            string query = $"update TB_CONTAS set Ativo = 0 where ID = {Id}";
+
+            try
+            {
+                using (var con = new SqlConnection(conect_bancoNovo))
+                {
+                    con.Open();
+                    con.Execute(query);
+                };
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }                 
         }
     }
 }

@@ -33,8 +33,8 @@
                 <td>@item.Vencimento.ToString("dd/MM/yyyy")</td>
                 <td>@item.Situacao</td>
                 <td class="col col-sm-2">
-                    <button type="Submit" class="btn btn-secondary btn-sm">Editar</button>
-                    <button type="Submit" class="btn btn-danger btn-sm">Excluir</button>
+                    <button type="Submit" id="editar" class="btn btn-secondary btn-sm" value="@item.Id" data-toggle="modal" data-target="#modalEdit">Editar</button>
+                    <button type="Submit" id="delete" value="@item.Id" class="btn btn-danger btn-sm" data-path="@Url.Action("DeletarConta","Home",new {@item.Id})">Excluir</button>
                 </td>
             </tr>
         }
@@ -58,6 +58,51 @@
                                 </div>
                                 <div class="col">
                                     <input type="text" id="valor" class="form-control" placeholder="Valor" >
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <input id="data" class="form-control input-md" type="date" maxlength="8" pattern="[0-9]+$">
+                                </div>
+                                <div class="col-md-3 ">
+                                    <select id="situa" class="form-select ">
+                                        <option selected>Selecione</option>
+                                        <option value="Pago">Pago</option>
+                                        <option value="A vencer">A vencer</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" id="ModalCadFooter">
+                <button type="Submit" class="btn btn-success" id="Salvar">Cadastrar</button>
+                <button type="button" class="btn btn-danger" id="close" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <h5 class="modal-title">Editar Conta</h5>
+            <div class="modal-body" id="ModalCad">
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col">
+                                    <input type="text" id="descri" class="form-control" placeholder="Descrição">
+                                </div>
+                                <div class="col">
+                                    <input type="text" id="valor" class="form-control" placeholder="Valor">
                                 </div>
                             </div>
                         </div>
@@ -117,6 +162,10 @@
             $('#meuInput').trigger('focus')
         });
 
+        $('#modalEdit').on('shown.bs.modal', function () {
+            $('#meuInput').trigger('focus')
+        });
+
 
     </script>
 
@@ -148,29 +197,60 @@
             });
         });
 
-        function Update(){
-            location.reload(true);
-        };
-
-
         $(function () {
-            $('#btnProximo').click(function () {
+            $('#editar').click(function () {
                 $.ajax(
                     {
                         type: "POST",
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
-                        url: "Home/ProximaPagina",
-                        data: 1,
-                        success: function (msg) {
-                            alert("funcionou");
+                        url: "Home/getconta",
+                        data: JSON.stringify({
+                            Id: $("#editar").val()
+                        }),
+                        success: function (msg){
+
+                            //GetCokie();
+                            alert("teste")
+                               
                         },
                         error: function () {
-                            alert("erro!");
+
                         }
                     });
             });
         });
+
+          $(function () {
+            $('#delete').click(function () {
+                $.ajax(
+                    {
+                        type: "POST",
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        url: "Home/DeletarConta",
+                        data: JSON.stringify({
+                            Id: $("#delete").val()
+                        }),
+                        success: function (msg){                            
+                            Update()                               
+                        },
+                        error: function () {
+
+                        }
+                    });
+            })
+        });
+
+        function GetCokie()
+        {
+           
+            alert("3333");
+        }
+
+        function Update(){
+            location.reload(true);
+        };
 
     </script>
 }

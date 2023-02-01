@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -47,6 +48,7 @@ namespace WebTeste.Controllers
         [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
         public IActionResult Privacy()
         {
+            @TempData["usuario"] = Request.Cookies["MyCookie"].Split('.')[0];
             return View();
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -65,7 +67,7 @@ namespace WebTeste.Controllers
         }
 
         [HttpPost]
-        
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
         public JsonResult Add([FromBody] object conta)
         {
             if (conta != null)
@@ -78,6 +80,24 @@ namespace WebTeste.Controllers
             return Json(false);
         }
 
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        public JsonResult getconta([FromBody] object id)
+        {
+            var Conta = JsonConvert.DeserializeObject<dynamic>(id.ToString());
+            string teste = Conta.ToString();
+            var conta = _conn.GetContasPorID(teste.Split(":")[1]);
+
+            var cookieOptions = new CookieOptions
+            {
+                Expires = DateTime.Now.AddHours(1),
+                HttpOnly = false,
+            };
+            Response.Cookies.Append("Conta", conta.ToString() , cookieOptions);
+
+            return Json(conta);
+        }
+
         [HttpPut]
         [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
         public IActionResult AtualizarConta()
@@ -86,11 +106,16 @@ namespace WebTeste.Controllers
 
         }
 
-        [HttpDelete]
+        [HttpPost]
         [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
-        public IActionResult DeletarConta()
+        public JsonResult DeletarConta([FromBody]object id)
         {
-            return Ok();
+            var Conta = JsonConvert.DeserializeObject<dynamic>(id.ToString());
+            string teste = Conta.ToString();
+            
+            _conn.deleteConta(teste.Split(":")[1]);
+            
+            return Json(true);
         }
     }
 }

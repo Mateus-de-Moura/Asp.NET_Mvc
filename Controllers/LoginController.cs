@@ -17,10 +17,10 @@ namespace WebTeste.Controllers
     public class LoginController : Controller
     {
         private readonly conexao _conexao;
-     
+
         public LoginController()
         {
-          
+
             _conexao = new conexao();
         }
 
@@ -33,6 +33,7 @@ namespace WebTeste.Controllers
             }
             else
             {
+                create_cookie_auth(Request.Cookies["MyCookie"].Split('.')[0]);
                 return RedirectToAction("Index", "Home");
             }
         }
@@ -54,20 +55,7 @@ namespace WebTeste.Controllers
                 {
                     if (retorno.Item1 == true)
                     {
-
-                        var claims = new List<Claim>
-                        {
-                            new Claim(ClaimTypes.Name, retorno.Item2.usuario),
-                        };
-
-                        var UserIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                        ClaimsPrincipal principal = new ClaimsPrincipal(UserIdentity);
-
-                        HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties
-                        {
-                            ExpiresUtc = DateTime.UtcNow.AddHours(2),
-                        });
+                        create_cookie_auth(retorno.Item2.Nome);
 
                         if (UsuarioModel.lembrar)
                         {
@@ -99,7 +87,7 @@ namespace WebTeste.Controllers
                 Expires = DateTime.Now.AddHours(-10),
                 HttpOnly = true,
             };
-            Response.Cookies.Append("MyCookie","", cookieOptions);
+            Response.Cookies.Append("MyCookie", "", cookieOptions);
 
             return RedirectToAction("Index");
         }
@@ -113,6 +101,22 @@ namespace WebTeste.Controllers
             return View("Index");
         }
 
+        public void create_cookie_auth(string nome)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, nome),
+            };
+
+            var UserIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            ClaimsPrincipal principal = new ClaimsPrincipal(UserIdentity);
+
+            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties
+            {
+                ExpiresUtc = DateTime.UtcNow.AddHours(2),
+            });
+        }
 
         public void Create_Cookie(string nome, string id)
         {
@@ -121,7 +125,7 @@ namespace WebTeste.Controllers
                 Expires = DateTime.Now.AddHours(10),
                 HttpOnly = true,
             };
-            Response.Cookies.Append("MyCookie", nome +"."+ id ,cookieOptions);
+            Response.Cookies.Append("MyCookie", nome + "." + id, cookieOptions);
         }
     }
 }

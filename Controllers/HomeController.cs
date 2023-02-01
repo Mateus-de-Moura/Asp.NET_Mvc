@@ -20,8 +20,6 @@ namespace WebTeste.Controllers
     {
        
         private readonly conexao _conn;
-
-
         private readonly ILogger<HomeController> _logger;
        
         public HomeController(ILogger<HomeController> logger)
@@ -29,11 +27,21 @@ namespace WebTeste.Controllers
             _conn = new conexao();
             _logger = logger;
         }
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+
+        [AllowAnonymous]  
         public IActionResult Index()
-        {       
-            var contas = _conn.GetContas();
-            return View(contas);
+        {
+            var user  = Request.Cookies["MyCookie"];
+            if (user == null)
+            {
+                return RedirectToAction("Index","Login");
+            }
+            else
+            {
+                @TempData["usuario"] = Request.Cookies["MyCookie"].Split('.')[0];
+                var contas = _conn.GetContas();
+                return View(contas);
+            }            
         }
 
         [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
@@ -52,7 +60,7 @@ namespace WebTeste.Controllers
         [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
         public IActionResult Adicionar(Contas conta)
         {
-            _conn.Cadastrar(conta);
+            _conn.Cadastrar(conta, Request.Cookies["MyCookie"].Split('.')[1].ToString());
             return RedirectToAction("Index");
         }
 
@@ -64,7 +72,7 @@ namespace WebTeste.Controllers
             {
                 var Conta = JsonConvert.DeserializeObject<Contas>(conta.ToString());
 
-                _conn.Cadastrar(Conta);
+                _conn.Cadastrar(Conta, Request.Cookies["MyCookie"].Split('.')[1].ToString());
                 return Json(true);
             }
             return Json(false);

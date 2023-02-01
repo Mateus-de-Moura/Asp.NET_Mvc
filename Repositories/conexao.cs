@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Nancy;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -72,10 +73,10 @@ namespace WebTeste.entites
             con.Close();
             return contas;
         }
-        public void Cadastrar(Contas conta)
+        public void Cadastrar(Contas conta, string request)
         {
             string valor = conta.Valor.ToString().Replace(",",".");            
-            string query = $"INSERT INTO TB_CONTAS(descricao,Valor,Vencimento,Situacao) VALUES ('{conta.Descricao}',{valor},'{conta.Vencimento}','{conta.Situacao}')";
+            string query = $"INSERT INTO TB_CONTAS(descricao,Valor,Vencimento,Situacao, ID_USUARIO) VALUES ('{conta.Descricao}',{valor},'{conta.Vencimento}','{conta.Situacao}', '{request}')";
 
             var con = new SqlConnection(conect_bancoNovo);
             con.Open();
@@ -84,7 +85,7 @@ namespace WebTeste.entites
         }
         public void CadastrarUsuario(UsuarioModel UsuarioModel) 
         {
-            string query = $"INSERT INTO TB_LOGIN (usuario,senha)VALUES(@USUARIO,@SENHA)";
+            string query = $"INSERT INTO TB_LOGIN (usuario,senha,nome)VALUES(@USUARIO,@SENHA,@Nome)";
             var con = new SqlConnection(conect_bancoNovo);
             con.Open();
             con.Execute(query, UsuarioModel);

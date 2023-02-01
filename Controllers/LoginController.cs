@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,16 +17,26 @@ namespace WebTeste.Controllers
     public class LoginController : Controller
     {
         private readonly conexao _conexao;
-
+     
         public LoginController()
         {
+          
             _conexao = new conexao();
         }
 
         public IActionResult Index()
         {
-            return View();
+            var nome = Request.Cookies["MyCookie"];
+            if (nome == null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
+
         public IActionResult Cadastro()
         {
             return View();
@@ -33,7 +45,6 @@ namespace WebTeste.Controllers
         [HttpPost]
         public IActionResult Logar(UsuarioModel UsuarioModel)
         {
-
             Criptografia cripto = new Criptografia();
             UsuarioModel.senha = cripto.Encript(UsuarioModel.senha);
             var retorno = _conexao.ConsultarUsuario(UsuarioModel.usuario, UsuarioModel.senha);
@@ -58,7 +69,10 @@ namespace WebTeste.Controllers
                             ExpiresUtc = DateTime.UtcNow.AddHours(2),
                         });
 
-                        TempData["MensagemErro"] = null;
+                        if (UsuarioModel.lembrar)
+                        {
+                            Create_Cookie(retorno.Item2.Nome, retorno.Item2.Id.ToString());
+                        };
 
                         return RedirectToAction("Index", "Home");
                     }
@@ -79,6 +93,14 @@ namespace WebTeste.Controllers
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var cookieOptions = new CookieOptions
+            {
+                Expires = DateTime.Now.AddHours(-10),
+                HttpOnly = true,
+            };
+            Response.Cookies.Append("MyCookie","", cookieOptions);
+
             return RedirectToAction("Index");
         }
 
@@ -89,6 +111,17 @@ namespace WebTeste.Controllers
             UsuarioModel.senha = cripto.Encript(UsuarioModel.senha);
             _conexao.CadastrarUsuario(UsuarioModel);
             return View("Index");
+        }
+
+
+        public void Create_Cookie(string nome, string id)
+        {
+            var cookieOptions = new CookieOptions
+            {
+                Expires = DateTime.Now.AddHours(10),
+                HttpOnly = true,
+            };
+            Response.Cookies.Append("MyCookie", nome +"."+ id ,cookieOptions);
         }
     }
 }

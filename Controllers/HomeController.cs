@@ -13,36 +13,43 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebTeste.entites;
 using WebTeste.Models;
-
+using WebTeste.ViewModel;
 
 namespace WebTeste.Controllers
 {
     public class HomeController : Controller
     {
-       
+
         private readonly conexao _conn;
         private readonly ILogger<HomeController> _logger;
-       
+
         public HomeController(ILogger<HomeController> logger)
         {
             _conn = new conexao();
             _logger = logger;
         }
 
-        [AllowAnonymous]  
-        public IActionResult Index()
+        [AllowAnonymous]
+        public IActionResult Index(string mes)
         {
-            var user  = Request.Cookies["MyCookie"];
-            if (user == null)
+            
+            @TempData["usuario"] = Request.Cookies["MyCookie"].Split('.')[0];           
+                
+            var user = Request.Cookies["MyCookie"];
+            var conta = new ContasViewModel();
+
+            if (string.IsNullOrEmpty(mes))
             {
-                return RedirectToAction("Index","Login");
+                
+                conta.Contas = _conn.GetContas("1");
             }
             else
-            {
-                @TempData["usuario"] = Request.Cookies["MyCookie"].Split('.')[0];
-                var contas = _conn.GetContas();
-                return View(contas);
-            }            
+            {               
+                 conta.Contas = _conn.GetContas(mes);
+            }
+
+           
+            return View(conta);
         }
 
         [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
@@ -55,10 +62,10 @@ namespace WebTeste.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }     
+        }
 
         [HttpPost]
-        
+
         [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
         public IActionResult Adicionar(Contas conta)
         {
@@ -93,7 +100,7 @@ namespace WebTeste.Controllers
                 Expires = DateTime.Now.AddHours(1),
                 HttpOnly = false,
             };
-            Response.Cookies.Append("Conta", conta.ToString() , cookieOptions);
+            Response.Cookies.Append("Conta", conta.ToString(), cookieOptions);
 
             return Json(conta);
         }
@@ -108,14 +115,33 @@ namespace WebTeste.Controllers
 
         [HttpPost]
         [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
-        public JsonResult DeletarConta([FromBody]object id)
+        public JsonResult DeletarConta([FromBody] object id)
         {
             var Conta = JsonConvert.DeserializeObject<dynamic>(id.ToString());
             string teste = Conta.ToString();
-            
+
             _conn.deleteConta(teste.Split(":")[1]);
-            
+
             return Json(true);
+        }
+
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        public IActionResult ListarPormes([FromBody] object id)
+        {
+            var Conta = JsonConvert.DeserializeObject<dynamic>(id.ToString());
+            string teste = Conta.ToString();
+
+            TempData["Mes"] = teste.Split(":")[1];
+            @TempData["usuario"] = Request.Cookies["MyCookie"].Split('.')[0];
+            var contas = _conn.GetContas(TempData["Mes"].ToString());
+            RedirectToAction("Index", contas);
+            //return View("Index",contas);
+            return null;
+            //return View("Index", contas);
+           
+            
+            
         }
     }
 }

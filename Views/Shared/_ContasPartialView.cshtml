@@ -1,0 +1,12 @@
+﻿@model Contas
+
+<tr>
+    <td>@Model.Descricao</td>
+    <td>@Model.Valor</td>
+    <td>@Model.Vencimento.ToString("dd/MM/yyyy")</td>
+    <td>@Model.Situacao</td>
+    <td class="col col-sm-2">
+        <button type="Submit" id="editar" class="btn btn-secondary btn-sm" value="@Model.Id" data-toggle="modal" data-target="#modalEdit">Editar</button>
+        <button type="Submit" id="delete" value="@Model.Id" class="btn btn-danger btn-sm" data-path="@Url.Action("DeletarConta","Home",new {@Model.Id})">Excluir</button>
+    </td>
+</tr>

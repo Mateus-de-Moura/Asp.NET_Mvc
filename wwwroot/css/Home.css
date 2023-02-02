@@ -189,3 +189,9 @@
 #teste_length, #teste_info {
     display: none;
 }
+.dropdown label{
+    color:white;
+}
+.dropdown{
+    padding-bottom: 1rem;
+}

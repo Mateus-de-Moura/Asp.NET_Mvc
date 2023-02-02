@@ -43,11 +43,21 @@ namespace WebTeste.entites
             }
           
         }
-        public IEnumerable<Contas> GetContas()
-        {                  
-            var Mes = DateTime.Now.Month;
+        public IEnumerable<Contas> GetContas(string? mes)
+        {
+            mes = Regex.Replace(mes, @"[$,"",}]", "").Trim();
+            var Mes = 0;
+            if (mes == null)
+            {
+                Mes = DateTime.Now.Month;
+            }
+            else
+            {
+                Mes = int.Parse(mes);
+            }
+             
 
-            string query = $"select * from TB_CONTAS where MONTH(Vencimento) = {Mes} and year(Vencimento) = DATEPART(year, getdate())";
+            string query = $"select * from TB_CONTAS where MONTH(Vencimento) = {Mes} and year(Vencimento) = DATEPART(year, getdate()) and Ativo = 1";
 
             var con = new SqlConnection(conect_bancoNovo);
             con.Open();

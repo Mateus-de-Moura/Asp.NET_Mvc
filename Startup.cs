@@ -62,6 +62,11 @@ namespace WebTeste
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                    name: "List",
+                    pattern: "Contas/{action}/{mes?}",
+                    defaults: new { controller = "Home", Action = "Index" });
+
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Login}/{action=Index}/{id?}");
             });

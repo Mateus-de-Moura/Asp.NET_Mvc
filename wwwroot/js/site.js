@@ -21,3 +21,28 @@ Input.addEventListener('keyup', () => {
     console.log(expressao, linhas);
 });
 
+// evento ativado quando  o select for selecionado 
+
+const select = document.getElementById('select');
+select.addEventListener('change', function () {
+    var mes = select.value;       
+            $.ajax(
+                {
+                    type: "POST",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    url: "Home/ListarPormes",
+                    data: JSON.stringify({
+                        Id: $("#select").val()
+                    }),
+                    success: function (msg) {
+                        Update()
+                    },
+                    error: function () {
+
+                    }
+                });  
+    
+})
+
+

@@ -5,8 +5,8 @@
     <td>@Model.Valor</td>
     <td>@Model.Vencimento.ToString("dd/MM/yyyy")</td>
     <td>@Model.Situacao</td>
-    <td class="col col-sm-2">
-        <button type="Submit" id="editar" class="btn btn-secondary btn-sm" value="@Model.Id" data-toggle="modal" data-target="#modalEdit">Editar</button>
-        <button type="Submit" id="delete" value="@Model.Id" class="btn btn-danger btn-sm" data-path="@Url.Action("DeletarConta","Home",new {@Model.Id})">Excluir</button>
+    <td class="col col-sm-2">        
+        <a id="Details" asp-controller="Home" asp-action="Details" asp-route-idconta="@Model.Id">Detalhes</a>
+        <a id="delete" asp-controller="Home" asp-action="Delete" asp-route-id="@Model.Id">Excluir</a>
     </td>
 </tr>

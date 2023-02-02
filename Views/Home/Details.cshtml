@@ -1,0 +1,41 @@
+﻿@model Contas
+<link rel="stylesheet" href="~/css/Datils.css">
+
+<form asp-action="AtualizarConta" asp-controller="Home" method="post">
+<div class="card">
+    <div class="card-body" id="cardDescription">
+        <h4>Descrição da conta</h4>
+        <div id="bodycard">
+                <div id="idConta">
+            <input asp-for="Id">@Model.Id" />
+            </div>
+         
+        <label class="col-md-12">Descrição</label>
+        <input asp-for="Descricao" value="@Model.Descricao" />
+
+        <label class="col-md-12">Valor</label>
+        <input asp-for="Valor" value="@Model.Valor" />
+
+        <label class="col-md-12">Vencimento</label>
+            <input asp-for="Vencimento" id="data" type="date" value="@Model.Vencimento.ToString("yyyy-MM-dd")">
+
+        <select asp-for="Situacao" id="situa" class="form-select col-mb-12">
+            @if (Model.Situacao == "Pago")
+            {
+                <option value="Pago" selected>Pago</option>
+                <option value="A vencer">A vencer</option>
+            }
+            else
+            {
+                <option value="Pago">Pago</option>
+                <option value="A vencer" selected>A vencer</option>
+            }
+        </select>
+        </div>
+        <div class="row" id="butoes">
+            <input type="submit" class="btn btn-primary col-md-5"/>
+            <a href="#" class="btn btn-success col-md-5">Voltar</a>
+        </div>
+    </div>
+</div>
+</form>

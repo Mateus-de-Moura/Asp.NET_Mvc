@@ -32,7 +32,7 @@ namespace WebTeste.Controllers
                 return View();
             }
             else
-            {
+            {               
                 create_cookie_auth(Request.Cookies["MyCookie"].Split('.')[0]);
                 return RedirectToAction("Index", "Home");
             }
@@ -61,7 +61,7 @@ namespace WebTeste.Controllers
                         {
                             Create_Cookie(retorno.Item2.Nome, retorno.Item2.Id.ToString());
                         };
-
+                      
                         return RedirectToAction("Index", "Home");
                     }
                     else

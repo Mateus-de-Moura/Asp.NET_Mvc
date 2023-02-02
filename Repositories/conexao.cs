@@ -43,7 +43,7 @@ namespace WebTeste.entites
             }
           
         }
-        public IEnumerable<Contas> GetContas(string? mes)
+        public IEnumerable<Contas> GetContas(string? mes ,int IdUser)
         {
             mes = Regex.Replace(mes, @"[$,"",}]", "").Trim();
             var Mes = 0;
@@ -57,7 +57,7 @@ namespace WebTeste.entites
             }
              
 
-            string query = $"select * from TB_CONTAS where MONTH(Vencimento) = {Mes} and year(Vencimento) = DATEPART(year, getdate()) and Ativo = 1";
+            string query = $"select * from TB_CONTAS where MONTH(Vencimento) = {Mes} and year(Vencimento) = DATEPART(year, getdate()) and Ativo = 1 and ID_USUARIO = {IdUser}";
 
             var con = new SqlConnection(conect_bancoNovo);
             con.Open();
@@ -69,11 +69,35 @@ namespace WebTeste.entites
             con.Close();
             return contas;
         }
-        public Contas GetContasPorID(string id)
+
+        public void AtualizarConta(Contas conta, int idUser)
         {
-            var Id = Regex.Replace(id, @"[$,"",}]", "").Trim();
+            string valor = conta.Valor.ToString().Replace(",", ".");          
+
+            string query = $"exec Update_Conta {conta.Id}, '{conta.Descricao}', {valor}, '{conta.Vencimento}', '{conta.Situacao}', {idUser}";
+
+            using(var con = new SqlConnection(conect_bancoNovo))
+            {
+                con.Open();
+
+                try
+                {
+                    con.Execute(query);
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+
+        }
+        public Contas GetContasPorID(int id)
+        {      
             var Mes = DateTime.Now.Month;
-            string query = $"select ID,descricao,Valor,Vencimento,Situacao from TB_CONTAS where MONTH(Vencimento) = {Mes} and year(Vencimento) = DATEPART(year, getdate())and ID = {int.Parse(Id)}";
+            string query = $"select *from TB_CONTAS where  ID = {id}";
+                
+                //$"select ID,descricao,Valor,Vencimento,Situacao from TB_CONTAS where MONTH(Vencimento) = {Mes} and year(Vencimento) = DATEPART(year, getdate())and ID = {id}";
 
             var con = new SqlConnection(conect_bancoNovo);
             con.Open();
@@ -104,10 +128,10 @@ namespace WebTeste.entites
             con.Close();
         }
 
-        public void deleteConta(string id)
+        public void deleteConta(int id)
         {
-            var Id = Regex.Replace(id, @"[$,"",}]", "").Trim();
-            string query = $"update TB_CONTAS set Ativo = 0 where ID = {Id}";
+            
+            string query = $"update TB_CONTAS set Ativo = 0 where ID = {id}";
 
             try
             {

@@ -17,6 +17,7 @@ using WebTeste.ViewModel;
 
 namespace WebTeste.Controllers
 {
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
     public class HomeController : Controller
     {
 
@@ -27,46 +28,55 @@ namespace WebTeste.Controllers
         {
             _conn = new conexao();
             _logger = logger;
-        }
-
-        [AllowAnonymous]
+        }        
         public IActionResult Index(string mes)
         {
             
-            @TempData["usuario"] = Request.Cookies["MyCookie"].Split('.')[0];           
+            @TempData["usuario"] = Request.Cookies["MyCookie"].Split('.')[0];            
                 
             var user = Request.Cookies["MyCookie"];
             var conta = new ContasViewModel();
 
             if (string.IsNullOrEmpty(mes))
             {
-                
-                conta.Contas = _conn.GetContas("1");
+                string mesatual = DateTime.Now.Month.ToString();
+                conta.Contas = _conn.GetContas(mesatual, int.Parse(Request.Cookies["MyCookie"].Split('.')[1]));
             }
             else
             {               
-                 conta.Contas = _conn.GetContas(mes);
-            }
+                 conta.Contas = _conn.GetContas(mes, int.Parse(Request.Cookies["MyCookie"].Split('.')[1]));
+            }           
+            return View(conta);
+        }
+        
+        public IActionResult Details(int idConta)
+        {
+            @TempData["usuario"] = Request.Cookies["MyCookie"].Split('.')[0];
 
-           
+            var conta =  _conn.GetContasPorID(idConta);
             return View(conta);
         }
 
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        public IActionResult Delete(string id)
+        {
+            _conn.deleteConta(int.Parse(id));
+
+            return RedirectToAction("Index");
+        }
+  
         public IActionResult Privacy()
         {
             @TempData["usuario"] = Request.Cookies["MyCookie"].Split('.')[0];
             return View();
         }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        [HttpPost]
-
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        [HttpPost]       
         public IActionResult Adicionar(Contas conta)
         {
             _conn.Cadastrar(conta, Request.Cookies["MyCookie"].Split('.')[1].ToString());
@@ -74,7 +84,6 @@ namespace WebTeste.Controllers
         }
 
         [HttpPost]
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
         public JsonResult Add([FromBody] object conta)
         {
             if (conta != null)
@@ -85,63 +94,13 @@ namespace WebTeste.Controllers
                 return Json(true);
             }
             return Json(false);
-        }
+        }    
 
-        [HttpPost]
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
-        public JsonResult getconta([FromBody] object id)
+        public IActionResult AtualizarConta(Contas Conta)
         {
-            var Conta = JsonConvert.DeserializeObject<dynamic>(id.ToString());
-            string teste = Conta.ToString();
-            var conta = _conn.GetContasPorID(teste.Split(":")[1]);
+            _conn.AtualizarConta(Conta, int.Parse( Request.Cookies["MyCookie"].Split('.')[1]));           
+            return RedirectToAction("Index","Home");
 
-            var cookieOptions = new CookieOptions
-            {
-                Expires = DateTime.Now.AddHours(1),
-                HttpOnly = false,
-            };
-            Response.Cookies.Append("Conta", conta.ToString(), cookieOptions);
-
-            return Json(conta);
-        }
-
-        [HttpPut]
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
-        public IActionResult AtualizarConta()
-        {
-            return Ok();
-
-        }
-
-        [HttpPost]
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
-        public JsonResult DeletarConta([FromBody] object id)
-        {
-            var Conta = JsonConvert.DeserializeObject<dynamic>(id.ToString());
-            string teste = Conta.ToString();
-
-            _conn.deleteConta(teste.Split(":")[1]);
-
-            return Json(true);
-        }
-
-        [HttpPost]
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
-        public IActionResult ListarPormes([FromBody] object id)
-        {
-            var Conta = JsonConvert.DeserializeObject<dynamic>(id.ToString());
-            string teste = Conta.ToString();
-
-            TempData["Mes"] = teste.Split(":")[1];
-            @TempData["usuario"] = Request.Cookies["MyCookie"].Split('.')[0];
-            var contas = _conn.GetContas(TempData["Mes"].ToString());
-            RedirectToAction("Index", contas);
-            //return View("Index",contas);
-            return null;
-            //return View("Index", contas);
-           
-            
-            
-        }
+        }     
     }
 }

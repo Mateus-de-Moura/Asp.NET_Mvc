@@ -60,11 +60,24 @@ namespace WebTeste
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
-            {
+            {              
+
+                endpoints.MapControllerRoute(
+                 name: "datails",
+                 pattern: "Contas/{action}/{idconta?}",
+                 defaults: new { controller = "Home", Action = "Details" });                 
+
                 endpoints.MapControllerRoute(
                     name: "List",
                     pattern: "Contas/{action}/{mes?}",
                     defaults: new { controller = "Home", Action = "Index" });
+
+                endpoints.MapControllerRoute(
+                 name: "Deletar",
+                 pattern: "Contas/{action}/{id?}",
+                 defaults: new { controller = "Home", Action = "Delete" });
+
+
 
                 endpoints.MapControllerRoute(
                     name: "default",

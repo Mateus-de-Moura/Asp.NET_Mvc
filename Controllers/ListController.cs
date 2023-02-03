@@ -4,7 +4,7 @@ namespace WebTeste.Controllers
 {
     public class ListController : Controller
     {
-        public string Index()
+        public string Index([FromBody] object obj)
         {
             return "testando as rotas";
         }

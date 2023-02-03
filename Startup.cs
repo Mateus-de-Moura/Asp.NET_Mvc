@@ -24,7 +24,7 @@ namespace WebTeste
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews();         
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                     .AddCookie(options =>
@@ -60,7 +60,8 @@ namespace WebTeste
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
-            {              
+            {
+                
 
                 endpoints.MapControllerRoute(
                  name: "datails",
@@ -73,11 +74,14 @@ namespace WebTeste
                     defaults: new { controller = "Home", Action = "Index" });
 
                 endpoints.MapControllerRoute(
+                name: "listar",
+                pattern: "Contas/{action}",
+                defaults: new { controller = "List", Action = "Index" });
+
+                endpoints.MapControllerRoute(
                  name: "Deletar",
                  pattern: "Contas/{action}/{id?}",
-                 defaults: new { controller = "Home", Action = "Delete" });
-
-
+                 defaults: new { controller = "Home", Action = "Delete" });                
 
                 endpoints.MapControllerRoute(
                     name: "default",

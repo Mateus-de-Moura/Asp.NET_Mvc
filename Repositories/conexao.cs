@@ -1,9 +1,12 @@
 ﻿using Dapper;
+using Microsoft.Extensions.Configuration;
 using Nancy;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using WebTeste.Models;
@@ -12,9 +15,15 @@ using WebTeste.Models;
 namespace WebTeste.entites
 {
     public class conexao 
-    {     
-        string conect_bancoNovo = @"Data Source=DESKTOP-II0SEOF\SQLEXPRESS;Initial Catalog=DB_WEB;Integrated Security=True";
-
+    {
+        string conect_bancoNovo;
+        public conexao()
+        {
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory()).
+                AddJsonFile("appsettings.json").Build();
+            conect_bancoNovo = configuration.GetConnectionString("Conexao"); 
+        }     
         public (bool,UsuarioModel) ConsultarUsuario(string usu, string psw)
         {
             var con = new SqlConnection(conect_bancoNovo);            
@@ -90,7 +99,6 @@ namespace WebTeste.entites
                     throw;
                 }
             }
-
         }
         public Contas GetContasPorID(int id)
         {      
@@ -112,7 +120,7 @@ namespace WebTeste.entites
         public void Cadastrar(Contas conta, string request)
         {
             string valor = conta.Valor.ToString().Replace(",",".");            
-            string query = $"INSERT INTO TB_CONTAS(descricao,Valor,Vencimento,Situacao, ID_USUARIO) VALUES ('{conta.Descricao}',{valor},'{conta.Vencimento}','{conta.Situacao}', '{request}')";
+            string query = $"INSERT INTO TB_CONTAS(descricao,Valor,Vencimento,Situacao, ID_USUARIO, Ativo) VALUES ('{conta.Descricao}',{valor},'{conta.Vencimento}','{conta.Situacao}', '{request}',1)";
 
             var con = new SqlConnection(conect_bancoNovo);
             con.Open();

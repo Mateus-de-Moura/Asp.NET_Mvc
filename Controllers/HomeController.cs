@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Permissions;
 using System.Threading.Tasks;
 using WebTeste.entites;
 using WebTeste.Models;
@@ -28,12 +29,12 @@ namespace WebTeste.Controllers
         {
             _conn = new conexao();
             _logger = logger;
-        }        
+        }
         public IActionResult Index(string mes)
         {
-            
-            @TempData["usuario"] = Request.Cookies["MyCookie"].Split('.')[0];            
-                
+
+            @TempData["usuario"] = Request.Cookies["MyCookie"].Split('.')[0];
+
             var user = Request.Cookies["MyCookie"];
             var conta = new ContasViewModel();
 
@@ -43,17 +44,17 @@ namespace WebTeste.Controllers
                 conta.Contas = _conn.GetContas(mesatual, int.Parse(Request.Cookies["MyCookie"].Split('.')[1]));
             }
             else
-            {               
-                 conta.Contas = _conn.GetContas(mes, int.Parse(Request.Cookies["MyCookie"].Split('.')[1]));
-            }           
+            {
+                conta.Contas = _conn.GetContas(mes, int.Parse(Request.Cookies["MyCookie"].Split('.')[1]));
+            }
             return View(conta);
         }
-        
+
         public IActionResult Details(int idConta)
         {
             @TempData["usuario"] = Request.Cookies["MyCookie"].Split('.')[0];
 
-            var conta =  _conn.GetContasPorID(idConta);
+            var conta = _conn.GetContasPorID(idConta);
             return View(conta);
         }
 
@@ -63,7 +64,7 @@ namespace WebTeste.Controllers
 
             return RedirectToAction("Index");
         }
-  
+
         public IActionResult Privacy()
         {
             @TempData["usuario"] = Request.Cookies["MyCookie"].Split('.')[0];
@@ -76,14 +77,18 @@ namespace WebTeste.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        [HttpPost]       
-        public IActionResult Adicionar(Contas conta)
+        [HttpPost]
+        public IActionResult Adicionar([FromBody] object conta)
         {
-            _conn.Cadastrar(conta, Request.Cookies["MyCookie"].Split('.')[1].ToString());
-            return RedirectToAction("Index");
+            var Conta = JsonConvert.DeserializeObject<Contas>(conta.ToString());
+            _conn.Cadastrar(Conta, Request.Cookies["MyCookie"].Split('.')[1].ToString());
+            return Json(true);
+            //return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        //[AllowAnonymous]
+        //[HttpPost]
+       
         public JsonResult Add([FromBody] object conta)
         {
             if (conta != null)

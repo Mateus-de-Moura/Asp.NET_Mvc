@@ -2,54 +2,53 @@
 <link rel="stylesheet" href="~/css/Home.css">
 
 
-<button id="btnNovo" type="button" class="d-flex btn btn-success btn-sm justify-content-start" data-toggle="modal" data-target="#modalExemplo">
-    NOVA +
-</button>
-
-<div class="row justify-content-end">
-    <div id="inputBusca" class="input-group">
-        <input id="Inpt" class="form-control  align-content-end" placeholder="Buscar..">
-    </div>
-</div>
-
-<div class="dropdown" id="drop">    
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Selecione
+    <button id="btnNovo" type="button" class="d-flex btn btn-success btn-sm justify-content-start" data-toggle="modal" data-target="#modalExemplo">
+        NOVA +
     </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="1">Janeiro</a>
-        <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="2">Fevereiro</a>
-        <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="3">Março</a>
-        <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="4">Abril</a>
-        <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="5">Maio</a>
-        <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="6">Junho</a>
-        <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="7">Julho</a>
-        <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="8">Agosto</a>
-        <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="9">Setembro</a>
-        <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="10">Outubro</a>
-        <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="11">Novembro</a>
-        <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="12">Dezembro</a>
-    </div>
-    <label>Filtrar Por Mes</label>
-</div>
 
-<table id="teste" class="table table-bordered table-condensed">
-    <thead class="thead-dark">
-        <tr>           
-            <th scope="col">Descrição</th>
-            <th scope="col">Valor</th>
-            <th scope="col">Vencimento</th>
-            <th scope="col">Situação</th>
-            <th scope="col">Ação</th>
-        </tr>
-    </thead>
-    <tbody id="Itens">
-        @foreach (var item in Model.Contas)
-        {
-         <partial name="_ContasPartialView" for="@item"/>
-        }
-    </tbody>
-</table>
+    <div class="row justify-content-end">
+        <div id="inputBusca" class="input-group">
+            <input id="Inpt" class="form-control  align-content-end" placeholder="Buscar..">
+        </div>
+    </div>
+
+    <div class="dropdown" id="drop">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Selecione
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="1">Janeiro</a>
+            <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="2">Fevereiro</a>
+            <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="3">Março</a>
+            <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="4">Abril</a>
+            <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="5">Maio</a>
+            <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="6">Junho</a>
+            <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="7">Julho</a>
+            <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="8">Agosto</a>
+            <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="9">Setembro</a>
+            <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="10">Outubro</a>
+            <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="11">Novembro</a>
+            <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="12">Dezembro</a>
+        </div>
+    </div>
+
+    <table id="teste" class="table table-bordered table-condensed">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Descrição</th>
+                <th scope="col">Valor</th>
+                <th scope="col">Vencimento</th>
+                <th scope="col">Situação</th>
+                <th scope="col">Ação</th>
+            </tr>
+        </thead>
+        <tbody id="Itens">
+            @foreach (var item in Model.Contas)
+            {
+                <partial name="_ContasPartialView" for="@item" />
+            }
+        </tbody>
+    </table>
 
 <!-- Modal -->
 <div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -64,10 +63,10 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                    <input type="text" id="descri" class="form-control" placeholder="Descrição" >
+                                    <input type="text" id="descri" class="form-control" placeholder="Descrição">
                                 </div>
                                 <div class="col">
-                                    <input type="text" id="valor" class="form-control" placeholder="Valor" >
+                                    <input type="text" id="valor" class="form-control" placeholder="Valor">
                                 </div>
                             </div>
                         </div>
@@ -152,7 +151,7 @@
 
 @section Scripts{
     <script>
-       
+
         $('#modalExemplo').on('shown.bs.modal', function () {
             $('#meuInput').trigger('focus')
         });
@@ -160,7 +159,7 @@
         $('#modalEdit').on('shown.bs.modal', function () {
             $('#meuInput').trigger('focus')
         });
-   
+
         $(function () {
             $('#Salvar').click(function () {
                 $.ajax(
@@ -168,7 +167,7 @@
                         type: "POST",
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
-                        url: "Home/Add",
+                        url: '@Url.Action("Adicionar")',
                         data: JSON.stringify({
                             Descricao: $("#descri").val(),
                             Valor: $("#valor").val(),
@@ -176,9 +175,9 @@
                             Situacao: $("#situa option:selected").val()
                         }),
 
-                        success: function (msg) {                                                      
+                        success: function (msg) {
                             $("#modalExemplo").modal('hide'),
-                                $("#close").trigger('click'),                                
+                                $("#close").trigger('click'),
                                 Update()
                         },
                         error: function () {
@@ -186,9 +185,9 @@
                         }
                     });
             });
-        });      
-        
-        function Update(){
+        });
+
+        function Update() {
             location.reload(true);
         };
 

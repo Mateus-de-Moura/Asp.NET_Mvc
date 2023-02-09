@@ -33,19 +33,43 @@ namespace WebTeste.Controllers
         public IActionResult Index(string mes)
         {
 
-            @TempData["usuario"] = Request.Cookies["MyCookie"].Split('.')[0];
+            if (!string.IsNullOrEmpty(Request.Cookies["MyCookie"]))
+            {
+                @TempData["usuario"] = Request.Cookies["MyCookie"].Split('.')[0];
+            }
+            else
+            {
+              @TempData["usuario"] = Request.Cookies["UserNaoManterLog"].Split('.')[0];
+            }
+
 
             var user = Request.Cookies["MyCookie"];
             var conta = new ContasViewModel();
 
             if (string.IsNullOrEmpty(mes))
             {
-                string mesatual = DateTime.Now.Month.ToString();
-                conta.Contas = _conn.GetContas(mesatual, int.Parse(Request.Cookies["MyCookie"].Split('.')[1]));
+                if (!string.IsNullOrEmpty(Request.Cookies["MyCookie"]))
+                {
+                    string mesatual = DateTime.Now.Month.ToString();
+                    conta.Contas = _conn.GetContas(mesatual, int.Parse(Request.Cookies["MyCookie"].Split('.')[1]));
+                }
+                else
+                {
+                    string mesatual = DateTime.Now.Month.ToString();
+                    conta.Contas = _conn.GetContas(mesatual, int.Parse(Request.Cookies["UserNaoManterLog"].Split('.')[1]));
+                }               
             }
             else
             {
-                conta.Contas = _conn.GetContas(mes, int.Parse(Request.Cookies["MyCookie"].Split('.')[1]));
+                if (!string.IsNullOrEmpty(Request.Cookies["MyCookie"]))
+                {
+                    conta.Contas = _conn.GetContas(mes, int.Parse(Request.Cookies["MyCookie"].Split('.')[1]));
+                }
+                else
+                {
+                    conta.Contas = _conn.GetContas(mes, int.Parse(Request.Cookies["UserNaoManterLog"].Split('.')[1]));
+                }
+               
             }
             return View(conta);
         }

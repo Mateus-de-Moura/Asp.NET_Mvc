@@ -56,10 +56,11 @@ namespace WebTeste.Controllers
                     if (retorno.Item1 == true)
                     {
                         create_cookie_auth(retorno.Item2.Nome);
+                        Create_Cookie("UserNaoManterLog", retorno.Item2.Nome, retorno.Item2.Id.ToString());
 
                         if (UsuarioModel.lembrar)
                         {
-                            Create_Cookie(retorno.Item2.Nome, retorno.Item2.Id.ToString());
+                            Create_Cookie("MyCookie", retorno.Item2.Nome, retorno.Item2.Id.ToString());
                         };
                       
                         return RedirectToAction("Index", "Home");
@@ -105,7 +106,7 @@ namespace WebTeste.Controllers
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, nome),
+                new Claim(ClaimTypes.Name, nome),                
             };
 
             var UserIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -118,14 +119,14 @@ namespace WebTeste.Controllers
             });
         }
 
-        public void Create_Cookie(string nome, string id)
+        public void Create_Cookie(string NomeCookie,string nome, string id)
         {
             var cookieOptions = new CookieOptions
             {
                 Expires = DateTime.Now.AddHours(10),
                 HttpOnly = true,
             };
-            Response.Cookies.Append("MyCookie", nome + "." + id, cookieOptions);
+            Response.Cookies.Append(NomeCookie, nome + "." + id, cookieOptions);
         }
     }
 }

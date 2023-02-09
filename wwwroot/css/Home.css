@@ -60,7 +60,7 @@
     border-block-color: #3e4147;
     border: none;
     border-top-left-radius: 25px;
-    box-shadow: 5px 5px 5px 5px;
+
 }
 
 #Itens td {
@@ -81,7 +81,7 @@
 
 #navbarHome {
     background-color: #3e4147;
-    box-shadow: 5px 5px 5px;
+   
  
 }
 
@@ -91,7 +91,7 @@
 
 #btnNovo {
     justify-content: flex-start;
-    position: absolute;
+   margin-bottom: 1rem;
     
     
 }
@@ -193,7 +193,11 @@
     color:white;
 }
 .dropdown{
-    padding-bottom: 1rem;
+   
+}
+#drop a {
+    color: black;
+    
 }
 
 #Details {

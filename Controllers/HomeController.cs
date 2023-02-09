@@ -42,7 +42,6 @@ namespace WebTeste.Controllers
               @TempData["usuario"] = Request.Cookies["UserNaoManterLog"].Split('.')[0];
             }
 
-
             var user = Request.Cookies["MyCookie"];
             var conta = new ContasViewModel();
 
@@ -91,8 +90,11 @@ namespace WebTeste.Controllers
 
         public IActionResult Privacy()
         {
+            string mesatual = DateTime.Now.Month.ToString();
+            var conta = new ContasViewModel();
+            conta.Contas = _conn.GetContas(mesatual, int.Parse(Request.Cookies["UserNaoManterLog"].Split('.')[1]));
             @TempData["usuario"] = Request.Cookies["MyCookie"].Split('.')[0];
-            return View();
+            return View(conta);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -104,14 +106,20 @@ namespace WebTeste.Controllers
         [HttpPost]
         public IActionResult Adicionar([FromBody] object conta)
         {
-            var Conta = JsonConvert.DeserializeObject<Contas>(conta.ToString());
-            _conn.Cadastrar(Conta, Request.Cookies["MyCookie"].Split('.')[1].ToString());
-            return Json(true);
+            try
+            {
+                var Conta = JsonConvert.DeserializeObject<Contas>(conta.ToString());
+                _conn.Cadastrar(Conta, Request.Cookies["MyCookie"].Split('.')[1].ToString());
+                return Json(true);
+            }
+            catch (Exception)
+            {
+
+                return BadRequest();
+            }
+        
             //return RedirectToAction("Index");
         }
-
-        //[AllowAnonymous]
-        //[HttpPost]
        
         public JsonResult Add([FromBody] object conta)
         {

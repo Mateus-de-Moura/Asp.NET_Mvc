@@ -1,0 +1,33 @@
+﻿body {
+    
+}
+.Busca{
+    display:flex;
+    flex-direction: row;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.Busca p{
+    color:white;
+    padding-left:15px;
+    padding-right:-25px;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+#drop{
+   padding-right: 1rem;
+}
+#Relatorio  {
+    background-color: #3e4147;
+    border-block-color: #3e4147;
+    border: none;
+  
+
+}
+#itensRelatorio td {
+    border-block-color: #3e4147;
+    border: none;
+    color: white;
+}

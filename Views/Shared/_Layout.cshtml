@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/Cadastro.css">
     <link rel="stylesheet" href="~/css/Home.css">
+    <link rel="stylesheet" href="~/css/Privace.css">
+
     <script src="~/js/Home.js" asp-append-version="true"></script>
 
 </head>
@@ -24,6 +26,32 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item align-content-end">
                             <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Olá, @TempData["usuario"] </a>
+                        </li>
+                        <li>
+                            <div class="dropdown" id="drop">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Selecione
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="1">Janeiro</a>
+                                    <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="2">Fevereiro</a>
+                                    <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="3">Março</a>
+                                    <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="4">Abril</a>
+                                    <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="5">Maio</a>
+                                    <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="6">Junho</a>
+                                    <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="7">Julho</a>
+                                    <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="8">Agosto</a>
+                                    <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="9">Setembro</a>
+                                    <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="10">Outubro</a>
+                                    <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="11">Novembro</a>
+                                    <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-mes="12">Dezembro</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div id="inputBusca" class="input-group">
+                                <input id="Inpt" class="form-control  align-content-end" placeholder="Buscar..">
+                            </div>
                         </li>
                     </ul>
                 </div>
